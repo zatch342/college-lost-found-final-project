@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${item.title})}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="page narrow">
+    <a class="back-link" th:href="@{/items}">Back to items</a>
+    <div class="alert success" th:if="${param.updated}">Item updated successfully.</div>
+    <div class="alert" th:if="${param.denied}">You can only edit your own posts.</div>
+
+    <article class="detail detail-card">
+        <div class="detail-image">
+            <img th:if="${item.imagePath}" th:src="@{${item.imagePath}}" alt="Uploaded item photo">
+            <div th:unless="${item.imagePath}" class="placeholder large">No image uploaded</div>
+        </div>
+        <div class="detail-body">
+            <div class="row between">
+                <span class="badge"
+                      th:classappend="${' ' + #strings.toLowerCase(item.status.name())}"
+                      th:text="${item.status}">LOST</span>
+                <span class="date" th:text="${#temporals.format(item.createdAt, 'MMM d, yyyy HH:mm')}">Date</span>
+            </div>
+            <h1 th:text="${item.title}">Item title</h1>
+            <dl class="facts">
+                <div>
+                    <dt>Location</dt>
+                    <dd th:text="${item.location}">Library</dd>
+                </div>
+                <div>
+                    <dt>Contact</dt>
+                    <dd th:text="${item.contactInfo ?: 'Ask the post owner'}">Contact</dd>
+                </div>
+                <div>
+                    <dt>Posted by</dt>
+                    <dd th:text="${item.owner.name}">Student</dd>
+                </div>
+            </dl>
+            <p class="detail-description" th:text="${item.description}">Description</p>
+
+            <div class="form-actions" th:if="${canEdit}">
+                <a class="button" th:href="@{/items/{id}/edit(id=${item.id})}">Edit</a>
+                <form th:action="@{/items/{id}/delete(id=${item.id})}" method="post" onsubmit="return confirm('Delete this item?')">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button class="button danger" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </article>
+</main>
+</body>
+</html>

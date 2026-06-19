@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Sign Up')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="auth-shell">
+    <section class="auth-card">
+        <p class="eyebrow">Join the board</p>
+        <h1>Sign Up</h1>
+        <p class="muted">Create an account to post lost or found items.</p>
+
+        <div class="alert" th:if="${error}" th:text="${error}"></div>
+
+        <form th:action="@{/register}" method="post" class="form-grid">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <label>Name
+                <input type="text" name="name" placeholder="Your name" required>
+            </label>
+            <label>Email
+                <input type="email" name="email" placeholder="student@email.com" required>
+            </label>
+            <label>Password
+                <input type="password" name="password" minlength="6" placeholder="At least 6 characters" required>
+            </label>
+            <button class="button primary" type="submit">Create Account</button>
+        </form>
+        <p class="switch-link">Already registered? <a th:href="@{/login}">Login</a></p>
+    </section>
+</main>
+</body>
+</html>

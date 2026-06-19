@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Items')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="page">
+    <section class="hero">
+        <div class="hero-copy">
+            <p class="eyebrow">Final project MVP</p>
+            <h1>Find lost items faster.</h1>
+            <p class="muted">A simple campus board for posting, searching, and returning lost property.</p>
+        </div>
+        <div class="hero-panel">
+            <span class="panel-kicker">Campus board</span>
+            <strong th:text="${items.size()}">0</strong>
+            <span>active posts to search right now</span>
+            <a class="button primary" th:href="@{/items/new}">Post New Item</a>
+        </div>
+    </section>
+
+    <section class="toolbar panel">
+        <form th:action="@{/items}" method="get" class="search">
+            <input type="search" name="keyword" th:value="${keyword}" placeholder="Search title, location, status...">
+            <button class="button" type="submit">Search</button>
+            <a class="button ghost" th:href="@{/items}" th:if="${keyword != ''}">Clear</a>
+        </form>
+    </section>
+
+    <div class="alert success" th:if="${param.created}">Item posted successfully.</div>
+    <div class="alert success" th:if="${param.deleted}">Item deleted.</div>
+
+    <section class="grid" th:if="${!items.isEmpty()}">
+        <article class="item-card" th:each="item : ${items}">
+            <a th:href="@{/items/{id}(id=${item.id})}" class="image-wrap">
+                <img th:if="${item.imagePath}" th:src="@{${item.imagePath}}" alt="Uploaded item photo">
+                <div th:unless="${item.imagePath}" class="placeholder">No image</div>
+            </a>
+            <div class="card-body">
+                <div class="row between">
+                    <span class="badge"
+                          th:classappend="${' ' + #strings.toLowerCase(item.status.name())}"
+                          th:text="${item.status}">LOST</span>
+                    <span class="date" th:text="${#temporals.format(item.createdAt, 'MMM d')}">Jun 18</span>
+                </div>
+                <h2><a th:href="@{/items/{id}(id=${item.id})}" th:text="${item.title}">Item title</a></h2>
+                <p th:text="${item.location}">Library</p>
+                <p class="description" th:text="${item.description}">Description</p>
+            </div>
+        </article>
+    </section>
+
+    <section class="empty" th:if="${items.isEmpty()}">
+        <h2>No items found</h2>
+        <p class="muted">Try another keyword or create the first post.</p>
+        <a class="button primary" th:href="@{/items/new}">Post Item</a>
+    </section>
+</main>
+</body>
+</html>
