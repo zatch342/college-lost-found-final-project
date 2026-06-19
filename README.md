@@ -144,3 +144,5 @@ The system uses two main tables. The `app_users` table stores account informatio
 ### Conclusion
 
 The project successfully implements a full-stack web application using Spring Boot, Spring Security, JPA, PostgreSQL, and Thymeleaf. It satisfies the required authentication, CRUD, image upload, search, database, design, and deployment requirements.
+
+###Copyright
