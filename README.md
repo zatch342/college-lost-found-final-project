@@ -95,13 +95,11 @@ git push -u origin main
 ### Render
 
 1. Create a PostgreSQL database on Render.
-2. Create a new Web Service from the GitHub repository.
+2. Create a new Blueprint or Web Service from the GitHub repository.
 3. Use these settings:
-   - Environment: Java
-   - Build command: `mvn clean package -DskipTests`
-   - Start command: `java -jar target/campus-lost-found-0.0.1-SNAPSHOT.jar`
+   - Runtime: Docker
+   - Dockerfile path: `./Dockerfile`
 4. Add environment variables:
-   - `JAVA_VERSION=17`
    - `SPRING_DATASOURCE_URL=jdbc:postgresql://HOST:PORT/DATABASE`
    - `SPRING_DATASOURCE_USERNAME=YOUR_DB_USER`
    - `SPRING_DATASOURCE_PASSWORD=YOUR_DB_PASSWORD`
