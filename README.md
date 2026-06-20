@@ -1,6 +1,6 @@
 # Campus Lost & Found
 
-A small university final-project MVP built for speed: Spring Boot, Spring Security, JPA, PostgreSQL, Thymeleaf, CRUD, search, and image upload.
+A small university final-project MVP built for speed: Spring Boot, Spring Security, JPA, PostgreSQL, Thymeleaf, CRUD, search, and image upload
 
 ## Phase 1 - Project Idea
 
